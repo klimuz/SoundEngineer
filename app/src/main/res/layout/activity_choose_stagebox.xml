@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseStageBoxActivity"
+    android:background="@color/cardview_dark_background">
+
+    <TextView
+        android:id="@+id/textViewChooseStageBoxes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/text_view_text_choose_stage_boxes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textViewFirstStageBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="200dp"
+        android:text="@string/text_view_text_first_stage_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textViewSecondStageBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_view_text_second_stage_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFirstStageBox"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textViewThirdStageBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_view_text_third_stage_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSecondStageBox"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textViewFourthStageBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_view_text_fourth_stage_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerThirdStageBox"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textViewFifthStageBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_view_text_fifth_stage_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFourthStageBox"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textViewSixthStageBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_view_text_sixth_stage_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFifthStageBox"
+        android:textColor="@color/white"/>
+
+    <Spinner
+        android:id="@+id/spinnerFirstStageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/cardview_light_background"
+        android:entries="@array/stage_boxes"
+        app:layout_constraintStart_toEndOf="@+id/textViewFirstStageBox"
+        app:layout_constraintTop_toTopOf="@+id/textViewFirstStageBox" />
+
+    <Spinner
+        android:id="@+id/spinnerSecondStageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/cardview_light_background"
+        android:entries="@array/stage_boxes"
+        app:layout_constraintStart_toEndOf="@+id/textViewSecondStageBox"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFirstStageBox" />
+
+    <Spinner
+        android:id="@+id/spinnerThirdStageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/cardview_light_background"
+        android:entries="@array/stage_boxes"
+        app:layout_constraintStart_toEndOf="@+id/textViewThirdStageBox"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSecondStageBox" />
+
+    <Spinner
+        android:id="@+id/spinnerFourthStageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/cardview_light_background"
+        android:entries="@array/stage_boxes"
+        app:layout_constraintStart_toEndOf="@+id/textViewFourthStageBox"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerThirdStageBox" />
+
+
+    <Spinner
+        android:id="@+id/spinnerFifthStageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/cardview_light_background"
+        android:entries="@array/stage_boxes"
+        app:layout_constraintStart_toEndOf="@+id/textViewFifthStageBox"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFourthStageBox" />
+
+    <Spinner
+        android:id="@+id/spinnerSixthStageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/cardview_light_background"
+        android:entries="@array/stage_boxes"
+        app:layout_constraintStart_toEndOf="@+id/textViewSixthStageBox"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFifthStageBox" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLeftIsOdd1"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/check_box_text_left_is_odd"
+        app:layout_constraintStart_toEndOf="@+id/spinnerFirstStageBox"
+        app:layout_constraintTop_toTopOf="@+id/spinnerFirstStageBox" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLeftIsOdd2"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/check_box_text_left_is_odd"
+        app:layout_constraintStart_toEndOf="@+id/spinnerSecondStageBox"
+        app:layout_constraintTop_toTopOf="@+id/spinnerSecondStageBox" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLeftIsOdd3"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/check_box_text_left_is_odd"
+        app:layout_constraintStart_toEndOf="@+id/spinnerThirdStageBox"
+        app:layout_constraintTop_toTopOf="@+id/spinnerThirdStageBox" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLeftIsOdd4"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/check_box_text_left_is_odd"
+        app:layout_constraintStart_toEndOf="@+id/spinnerFourthStageBox"
+        app:layout_constraintTop_toTopOf="@+id/spinnerFourthStageBox" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLeftIsOdd5"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/check_box_text_left_is_odd"
+        app:layout_constraintStart_toEndOf="@+id/spinnerFifthStageBox"
+        app:layout_constraintTop_toTopOf="@+id/spinnerFifthStageBox" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLeftIsOdd6"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:background="@android:color/darker_gray"
+        android:text="@string/check_box_text_left_is_odd"
+        app:layout_constraintStart_toEndOf="@+id/spinnerSixthStageBox"
+        app:layout_constraintTop_toTopOf="@+id/spinnerSixthStageBox" />
+
+    <Button
+        android:id="@+id/buttonAcceptStageBoxes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="onClickAcceptStageBoxes"
+        android:text="@string/button_text_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSixthStageBox" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
