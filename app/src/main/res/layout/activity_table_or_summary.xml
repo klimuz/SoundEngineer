@@ -20,15 +20,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/sendSheetButton"
+        android:id="@+id/sendTextSheetButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/send_sheet_button_text"
+        android:text="@string/send_text_sheet_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TableOrSummaryTextView"
-        android:onClick="sendSheet"
+        android:onClick="sendTextSheet"
+        tools:ignore="UsingOnClickInXml" />
+
+    <Button
+        android:id="@+id/sendExcelButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/send_excel_sheet_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendTextSheetButton"
+        android:onClick="sendExcelSheet"
         tools:ignore="UsingOnClickInXml" />
 
     <Button
@@ -39,7 +51,7 @@
         android:text="@string/send_summary_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sendSheetButton"
+        app:layout_constraintTop_toBottomOf="@+id/sendExcelButton"
         android:onClick="sendSummary"
-        tools:ignore="UsingOnClickInXml" />
+        tools:ignore="UsingOnClickInXml"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

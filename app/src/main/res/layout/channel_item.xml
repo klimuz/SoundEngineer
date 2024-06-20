@@ -13,50 +13,56 @@
         android:background="#8C8C8C"
         android:orientation="horizontal"
         android:padding="5dp"
-        android:weightSum="100">
+        android:weightSum="120">
 
         <TextView
             android:id="@+id/textViewNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
+            android:layout_weight="11"
             android:background="@drawable/view_style"
             android:paddingLeft="4dp"
+            android:textSize="10sp"
+            android:singleLine="true"
             android:textColor="@color/white"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
 
         <TextView
             android:id="@+id/textViewRioName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="15"
+            android:layout_weight="17"
             android:background="@drawable/view_style"
             android:paddingLeft="4dp"
-            android:textSize="11sp"
+            android:textSize="10sp"
+            android:singleLine="true"
             android:textColor="@color/white"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
 
         <TextView
             android:id="@+id/textViewRioNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
+            android:layout_weight="12"
             android:background="@drawable/view_style"
             android:paddingLeft="4dp"
-            android:textSize="11sp"
+            android:maxLength="5"
+            android:textSize="9sp"
+            android:singleLine="true"
             android:textColor="@color/white"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
 
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="39"
+            android:layout_weight="35"
             android:background="@drawable/view_style"
             android:paddingLeft="4dp"
             android:textColor="@color/white"
-            android:textSize="15sp"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            android:textSize="10sp"
+            android:singleLine="true"
+            tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
 
         <TextView
             android:id="@+id/textViewPickup"
@@ -66,7 +72,21 @@
             android:background="@drawable/view_style"
             android:paddingLeft="4dp"
             android:textColor="@color/white"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            android:textSize="10sp"
+            android:singleLine="true"
+            tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
+
+        <TextView
+            android:id="@+id/textViewNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="19"
+            android:background="@drawable/view_style"
+            android:maxLength="7"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:singleLine="true"
+            tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
 
 
     </LinearLayout>

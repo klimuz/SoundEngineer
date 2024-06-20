@@ -1,11 +1,15 @@
 package uz.klimuz.soundengineer;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,59 +17,64 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class ChannelListActivity extends AppCompatActivity {
     private RecyclerView recyclerViewChannels;
-    private TextView textViewTotalChannelsDigits;
-    public static int totalCannelsQuantity = 0;
+    private TextView textViewTotal;
+    private FloatingActionButton buttonUndo;
+    public static int totalChannelsQuantity = 0;
     public static final ArrayList<Channel> channels = new ArrayList<>();
-    ChannelsAdapter adapter;
+    public static final ArrayList<Channel> backup = new ArrayList<>();
+    private ChannelsAdapter adapter;
+    private ChannelsDBHelper dbHelper;
+    private SQLiteDatabase database;
+    private boolean isNew = false;
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
+        bundle = getIntent().getExtras();
+        isNew = bundle.getBoolean("isNew", false);
         recyclerViewChannels = findViewById(R.id.recyclerViewChannels);
-        textViewTotalChannelsDigits = findViewById(R.id.textViewTotalChannelsDigits);
-        if (channels.isEmpty()) {
-            channels.add(new Channel(1, "name1", "condenser"));
-            channels.add(new Channel(2, "name2", "D.I.box"));
-            channels.add(new Channel(3, "name3", "wireless"));
-            channels.add(new Channel(4, "name4", "DPA"));
-            channels.add(new Channel(5, "name5", "HeadSet"));
-            channels.add(new Channel(6, "name6", "BodyPack"));
-            channels.add(new Channel(7, "name7", "dynamic"));
-            channels.add(new Channel(8, "name8", "dynamic"));
-            channels.add(new Channel(9, "name9", "dynamic"));
-            channels.add(new Channel(10, "name10", "dynamic"));
-            channels.add(new Channel(11, "name11", "dynamic"));
-            channels.add(new Channel(12, "name12", "dynamic"));
-            channels.add(new Channel(13, "name13", "dynamic"));
-            channels.add(new Channel(14, "name14", "dynamic"));
-            channels.add(new Channel(15, "name15", "dynamic"));
-            channels.add(new Channel(16, "name16", "dynamic"));
-            channels.add(new Channel(17, "name17", "dynamic"));
-            channels.add(new Channel(18, "name18", "dynamic"));
-            channels.add(new Channel(19, "name19", "dynamic"));
-            channels.add(new Channel(20, "name20", "dynamic"));
-            channels.add(new Channel(21, "name21", "dynamic"));
-            channels.add(new Channel(22, "name22", "dynamic"));
-            channels.add(new Channel(23, "name23", "dynamic"));
-            channels.add(new Channel(24, "name24", "dynamic"));
-            channels.add(new Channel(25, "name25", "dynamic"));
-            channels.add(new Channel(26, "name26", "dynamic"));
-            channels.add(new Channel(27, "name27", "dynamic"));
-            channels.add(new Channel(28, "name28", "dynamic"));
-            channels.add(new Channel(29, "name29", "dynamic"));
-            channels.add(new Channel(30, "name30", "dynamic"));
-            channels.add(new Channel(31, "name31", "dynamic"));
-            channels.add(new Channel(32, "name32", "dynamic"));
-            channels.add(new Channel(33, "name33", "dynamic"));
-            channels.add(new Channel(34, "name34", "dynamic"));
-            channels.add(new Channel(35, "name35", "dynamic"));
+        textViewTotal = findViewById(R.id.textViewTotal);
+        buttonUndo = findViewById(R.id.buttonUndo);
+        if (backup.isEmpty()){
+            buttonUndo.setEnabled(false);
         }
-        correctChannelNumbers();
-        textViewTotalChannelsDigits.setText(String.valueOf(totalCannelsQuantity));
+        dbHelper = new ChannelsDBHelper(this);
+        database = dbHelper.getWritableDatabase();
+        if (channels.isEmpty()) {
+            if (isNew) {
+                database.delete(ChannelsContract.ChannelsEntry.TABLE_NAME, null, null);
+            } else {
+                Cursor cursor = database.query(ChannelsContract.ChannelsEntry.TABLE_NAME, null, null, null, null, null, null);
+                boolean isDBEmpty = cursor.getCount() > 0;
+                while (cursor.moveToNext()) {
+                    int number = cursor.getInt(cursor.getColumnIndex(ChannelsContract.ChannelsEntry.COLUMN_NUMBER));
+                    String rioName = cursor.getString(cursor.getColumnIndex(ChannelsContract.ChannelsEntry.COLUMN_RIO_NAME));
+                    String rioNumber = cursor.getString(cursor.getColumnIndex(ChannelsContract.ChannelsEntry.COLUMN_RIO_NUMBER));
+                    String name = cursor.getString(cursor.getColumnIndex(ChannelsContract.ChannelsEntry.COLUMN_NAME));
+                    String pickup = cursor.getString(cursor.getColumnIndex(ChannelsContract.ChannelsEntry.COLUMN_PICKUP));
+                    String note = cursor.getString(cursor.getColumnIndex(ChannelsContract.ChannelsEntry.COLUMN_NOTE));
+                    Channel channel = new Channel();
+                    channel.setNumber(number);
+                    channel.setRioName(rioName);
+                    channel.setRioNumber(rioNumber);
+                    channel.setName(name);
+                    channel.setPickup(pickup);
+                    channel.setNote(note);
+                    channels.add(channel);
+                }
+                cursor.close();
+                correctChannelNumbers();
+            }
+        }
+        database.delete(ChannelsContract.ChannelsEntry.TABLE_NAME, null, null);
+        textViewTotal.setText(String.valueOf(totalChannelsQuantity));
         adapter = new ChannelsAdapter(channels);
         recyclerViewChannels.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewChannels.setAdapter(adapter);
@@ -87,6 +96,9 @@ public class ChannelListActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                backup.clear();
+                backup.addAll(channels);
+                buttonUndo.setEnabled(true);
                 switch (i){
                     case 4: remove(viewHolder.getAdapterPosition());
                     break;
@@ -96,6 +108,12 @@ public class ChannelListActivity extends AppCompatActivity {
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerViewChannels);
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        saveAppState();
+        arrayListToDatabase();
     }
     private void openChannelEditor(int position){
         Channel channel = channels.get(position);
@@ -113,7 +131,7 @@ public class ChannelListActivity extends AppCompatActivity {
     private void removeAndTrim(int position){
         channels.remove(position);
         correctChannelNumbers();
-        textViewTotalChannelsDigits.setText(String.valueOf(totalCannelsQuantity));
+        textViewTotal.setText(String.valueOf(totalChannelsQuantity));
         adapter.notifyDataSetChanged();
     }
 
@@ -123,8 +141,24 @@ public class ChannelListActivity extends AppCompatActivity {
     }
 
     public void onClickShare(View view) {
+        arrayListToDatabase();
+        saveAppState();
         Intent intent = new Intent(this, TableOrSummary.class);
         startActivity(intent);
+    }
+
+    public void arrayListToDatabase (){
+        database.delete(ChannelsContract.ChannelsEntry.TABLE_NAME, null, null);
+        for (Channel channel : channels){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ChannelsContract.ChannelsEntry.COLUMN_NUMBER, channel.getNumber());
+            contentValues.put(ChannelsContract.ChannelsEntry.COLUMN_RIO_NAME, channel.getRioName());
+            contentValues.put(ChannelsContract.ChannelsEntry.COLUMN_RIO_NUMBER,channel.getRioNumber());
+            contentValues.put(ChannelsContract.ChannelsEntry.COLUMN_NAME, channel.getName());
+            contentValues.put(ChannelsContract.ChannelsEntry.COLUMN_PICKUP, channel.getPickup());
+            contentValues.put(ChannelsContract.ChannelsEntry.COLUMN_NOTE, channel.getNote());
+            database.insert(ChannelsContract.ChannelsEntry.TABLE_NAME, null, contentValues);
+        }
     }
 
     public static void correctChannelNumbers(){
@@ -134,8 +168,27 @@ public class ChannelListActivity extends AppCompatActivity {
             channel.setNumber(channelNumber);
             channel.setRioName(rioDistributor.distributeStageBoxes(channelNumber).get(0));
             channel.setRioNumber(rioDistributor.distributeStageBoxes(channelNumber).get(1));
-            totalCannelsQuantity = channels.size();
-
+            totalChannelsQuantity = channels.size();
         }
+    }
+
+    public void onClickUndo(View view) {
+        channels.clear();
+        channels.addAll(backup);
+        backup.clear();
+        adapter.notifyDataSetChanged();
+        totalChannelsQuantity = channels.size();
+        textViewTotal.setText(String.valueOf(totalChannelsQuantity));
+        buttonUndo.setEnabled(false);
+    }
+    private void  saveAppState(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.edit().putString("projectName", ChooseStageBoxActivity.projectName).apply();
+        preferences.edit().putInt("spinner1Position", ChooseStageBoxActivity.spinner1Position).apply();
+        preferences.edit().putInt("spinner2Position", ChooseStageBoxActivity.spinner2Position).apply();
+        preferences.edit().putInt("spinner3Position", ChooseStageBoxActivity.spinner3Position).apply();
+        preferences.edit().putInt("spinner4Position", ChooseStageBoxActivity.spinner4Position).apply();
+        preferences.edit().putInt("spinner5Position", ChooseStageBoxActivity.spinner5Position).apply();
+        preferences.edit().putInt("spinner6Position", ChooseStageBoxActivity.spinner6Position).apply();
     }
 }

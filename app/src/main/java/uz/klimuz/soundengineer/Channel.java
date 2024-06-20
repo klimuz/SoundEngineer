@@ -3,21 +3,32 @@ package uz.klimuz.soundengineer;
 import java.io.Serializable;
 
 public class Channel implements Serializable {
-    private int number;//0
+    private int number;
     private String rioName;
     private String rioNumber;
     private String name;//"---"
-    private String pickup;//"---"
+    private String pickup;//""
+    private String note;
 
     public Channel(){
         this.name = "---";
-        this.pickup = "---";
+        this.pickup = "";
+        this.note = "";
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Channel(int number, String name, String pickup) {
         this.number = number;
         this.name = name;
         this.pickup = pickup;
+        this.note = "";
     }
 
     public void setNumber(int number) {

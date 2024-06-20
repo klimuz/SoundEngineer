@@ -1,10 +1,13 @@
 package uz.klimuz.soundengineer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,7 @@ public class ChooseStageBoxActivity extends AppCompatActivity {
     private CheckBox checkBox4;
     private CheckBox checkBox5;
     private CheckBox checkBox6;
+    private EditText editTextEnterName;
 
     public static int spinner1Position;
     public static int spinner2Position;
@@ -37,10 +41,14 @@ public class ChooseStageBoxActivity extends AppCompatActivity {
     public static boolean isLeftOdd4;
     public static boolean isLeftOdd5;
     public static boolean isLeftOdd6;
+    public static String projectName = "";
+    private boolean isNew = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getExtras();
+        isNew = bundle.getBoolean("isNew", false);
         setContentView(R.layout.activity_choose_stagebox);
         stageBox1 = findViewById(R.id.spinnerFirstStageBox);
         stageBox2 = findViewById(R.id.spinnerSecondStageBox);
@@ -55,6 +63,29 @@ public class ChooseStageBoxActivity extends AppCompatActivity {
         checkBox4 = findViewById(R.id.checkBoxLeftIsOdd4);
         checkBox5 = findViewById(R.id.checkBoxLeftIsOdd5);
         checkBox6 = findViewById(R.id.checkBoxLeftIsOdd6);
+        editTextEnterName = findViewById(R.id.editTextEnterName);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        projectName = preferences.getString("projectName", projectName);
+        spinner1Position = preferences.getInt("spinner1Position", 0);
+        spinner2Position = preferences.getInt("spinner2Position", 0);
+        spinner3Position = preferences.getInt("spinner3Position", 0);
+        spinner4Position = preferences.getInt("spinner4Position", 0);
+        spinner5Position = preferences.getInt("spinner5Position", 0);
+        spinner6Position = preferences.getInt("spinner6Position", 0);
+
+        if (isNew){
+            projectName = "";
+            editTextEnterName.setText(projectName);
+        }else {
+            editTextEnterName.setText(projectName);
+        }
+        stageBox1.setSelection(spinner1Position);
+        stageBox2.setSelection(spinner2Position);
+        stageBox3.setSelection(spinner3Position);
+        stageBox4.setSelection(spinner4Position);
+        stageBox5.setSelection(spinner5Position);
+        stageBox6.setSelection(spinner6Position);
 
         stageBox1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -163,6 +194,7 @@ public class ChooseStageBoxActivity extends AppCompatActivity {
     }
     public void onClickAcceptStageBoxes(View view) {
         spinner6Position = stageBox6.getSelectedItemPosition();
+        projectName = editTextEnterName.getText().toString();
 
         isLeftOdd1 = checkBox1.isChecked();
         isLeftOdd2 = checkBox2.isChecked();
@@ -172,7 +204,8 @@ public class ChooseStageBoxActivity extends AppCompatActivity {
         isLeftOdd6 = checkBox6.isChecked();
 
 
-        Intent intent = new Intent(this, ChooseInputOrOutputActivity.class);
+        Intent intent = new Intent(this, ChannelListActivity.class);
+        intent.putExtra("isNew", isNew);
         startActivity(intent);
     }
 }

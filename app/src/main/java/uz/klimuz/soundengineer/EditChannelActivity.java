@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,8 @@ public class EditChannelActivity extends AppCompatActivity {
     private EditText editTextChannelName;
     private Spinner spinnerPickup;
     private int channelNumber;
+    private TextView textViewAddOrEdit;
+    private EditText editTextNote;
 
 
     @Override
@@ -24,6 +27,9 @@ public class EditChannelActivity extends AppCompatActivity {
         editTextEnterChannelNumber = findViewById(R.id.editTextEnterChannelNumber);
         editTextChannelName = findViewById(R.id.editTextChannelName);
         spinnerPickup = findViewById(R.id.spinnerPickup);
+        textViewAddOrEdit = findViewById(R.id.textViewAddOrEdit);
+        textViewAddOrEdit.setText(R.string.edit_channel);
+        editTextNote = findViewById(R.id.editTextNote);
 
         Bundle arguments = getIntent().getExtras();
         Channel channel;
@@ -32,6 +38,7 @@ public class EditChannelActivity extends AppCompatActivity {
             channelNumber = channel.getNumber();
             editTextEnterChannelNumber.setText(String.valueOf(channelNumber));
             editTextChannelName.setText(channel.getName());
+            editTextNote.setText(channel.getNote());
             String pickup = channel.getPickup();
             int pickupIndex;
             switch (pickup){
@@ -47,6 +54,8 @@ public class EditChannelActivity extends AppCompatActivity {
                 break;
                 case "BodyPack": pickupIndex = 6;
                 break;
+                case "": pickupIndex = 7;
+                break;
                 default: pickupIndex = 0;
                 break;
             }
@@ -55,15 +64,25 @@ public class EditChannelActivity extends AppCompatActivity {
     }
     public void onClickCancel(View view) {
         Intent intent = new Intent(this, ChannelListActivity.class);
+        intent.putExtra("isNew", false);
         startActivity(intent);
     }
     public void onClickOk(View view) {
+        ChannelListActivity.backup.clear();
+        ChannelListActivity.backup.addAll(ChannelListActivity.channels);
         String numberString = editTextEnterChannelNumber.getText().toString().trim();
         String name = editTextChannelName.getText().toString().trim();
-        String pickup = spinnerPickup.getSelectedItem().toString();
+        String pickup;
+        String note = editTextNote.getText().toString().trim();
+        if (spinnerPickup.getSelectedItem().toString().equals("nothing")){
+            pickup = "";
+        }else {
+          pickup = spinnerPickup.getSelectedItem().toString();
+        }
         if (isFilled(numberString, name)) {
             int number = Integer.parseInt(numberString);
             Channel channel = new Channel(number, name, pickup);
+            channel.setNote(note);
             ChannelListActivity.channels.remove(channelNumber - 1);
             if (number > ChannelListActivity.channels.size()) {
                 fillEmptyChannels(ChannelListActivity.channels.size() - 1, number - 2);
@@ -72,6 +91,7 @@ public class EditChannelActivity extends AppCompatActivity {
             ChannelListActivity.correctChannelNumbers();
 
             Intent intent = new Intent(this, ChannelListActivity.class);
+            intent.putExtra("isNew", false);
             startActivity(intent);
         } else  {
             String toastFillAllFields = getString(R.string.warning_fill_all_fields);

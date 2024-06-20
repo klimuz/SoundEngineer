@@ -12,25 +12,25 @@
         android:id="@+id/textViewEnterChannelNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
         android:text="@string/enter_channel_number"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/white"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextEnterChannelNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="100dp"
         android:background="@color/design_default_color_primary_dark"
         android:ems="3"
         android:hint="@string/edit_text_hint_number"
-        android:textColorHint="#757575"
         android:inputType="number"
         android:textColor="@color/white"
+        android:textColorHint="#757575"
         app:layout_constraintStart_toEndOf="@+id/textViewEnterChannelNumber"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="Autofill" />
@@ -100,14 +100,43 @@
         android:id="@+id/buttonOk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@android:color/holo_green_dark"
+        android:onClick="onClickOk"
         android:text="@android:string/ok"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerPickup"
-        android:onClick="onClickOk"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNote"
         tools:ignore="UsingOnClickInXml" />
+
+    <EditText
+        android:id="@+id/editTextNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="201dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:ems="10"
+        android:textColorHint="#757575"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:hint="@string/header_note"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPickup" />
+
+    <TextView
+        android:id="@+id/textViewAddOrEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="61dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

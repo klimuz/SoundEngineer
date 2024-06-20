@@ -1,5 +1,6 @@
 package uz.klimuz.soundengineer;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,14 +40,17 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.Channe
     }
     @Override
     public void onBindViewHolder(@NonNull ChannelsViewHolder channelsViewHolder, int i) {
-        int darkerBackgroundColor = channelsViewHolder.itemView.getResources().getColor(R.color.darker_channel_background);
-        int brighterBackgroundColor = channelsViewHolder.itemView.getResources().getColor(R.color.brighter_channel_background);
         Channel channel = channels.get(i);
         channelsViewHolder.textViewNumber.setText(String.format("%s", channel.getNumber()));
         channelsViewHolder.textViewRioName.setText(channel.getRioName());
         channelsViewHolder.textViewRioNumber.setText(channel.getRioNumber());
         channelsViewHolder.textViewName.setText(channel.getName());
         channelsViewHolder.textViewPickup.setText(channel.getPickup());
+        Log.i("MyResult", channel.getNote());
+        channelsViewHolder.textViewNote.setText(channel.getNote());
+//        if (channel.getNote() != null) {
+//            channelsViewHolder.textViewNote.setText(channel.getNote());
+//        }
     }
     @Override
     public int getItemCount() {
@@ -58,6 +62,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.Channe
         private TextView textViewRioNumber;
         private TextView textViewName;
         private TextView textViewPickup;
+        private TextView textViewNote;
         private LinearLayout channelItemLinearLayout;
 
         public ChannelsViewHolder(@NonNull View itemView) {
@@ -67,6 +72,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.Channe
             textViewRioNumber = itemView.findViewById(R.id.textViewRioNumber);
             textViewName = itemView.findViewById(R.id.textViewName);
             textViewPickup = itemView.findViewById(R.id.textViewPickup);
+            textViewNote = itemView.findViewById(R.id.textViewNote);
             channelItemLinearLayout = itemView.findViewById(R.id.channelItemLinearLayout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
